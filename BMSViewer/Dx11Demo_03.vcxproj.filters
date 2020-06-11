@@ -1,0 +1,126 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="소스 파일">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="헤더 파일">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Graphic">
+      <UniqueIdentifier>{899b177d-ea69-4eac-b2d7-6d139d3c333b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphic\header">
+      <UniqueIdentifier>{3abd1a99-bd55-47e8-8ed5-92ca5dcc937f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphic\src">
+      <UniqueIdentifier>{4ffe378a-62dd-409a-a471-3de97132f5a6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ReadFile">
+      <UniqueIdentifier>{8a873b53-1cdd-42b9-bf93-d80751f67ddd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource">
+      <UniqueIdentifier>{3fbdf799-448a-41da-a9b7-f8593ed978d8}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="stdafx.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="SystemClass.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphicsClass.h">
+      <Filter>Graphic\header</Filter>
+    </ClInclude>
+    <ClInclude Include="InputClass.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="AlignedAllocationPolicy.h">
+      <Filter>Graphic\header</Filter>
+    </ClInclude>
+    <ClInclude Include="D3DClass.h">
+      <Filter>Graphic\header</Filter>
+    </ClInclude>
+    <ClInclude Include="DxDefine.h">
+      <Filter>Graphic\header</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraClass.h">
+      <Filter>Graphic\header</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureShaderClass.h">
+      <Filter>Graphic\header</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureClass.h">
+      <Filter>Graphic\header</Filter>
+    </ClInclude>
+    <ClInclude Include="BitmapClass.h">
+      <Filter>Graphic\header</Filter>
+    </ClInclude>
+    <ClInclude Include="DDSTextureLoader.h">
+      <Filter>Graphic\header</Filter>
+    </ClInclude>
+    <ClInclude Include="CustomDataStructure.hpp">
+      <Filter>Graphic\header</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Main.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="SystemClass.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="GraphicsClass.cpp">
+      <Filter>Graphic\src</Filter>
+    </ClCompile>
+    <ClCompile Include="InputClass.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="D3DClass.cpp">
+      <Filter>Graphic\src</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraClass.cpp">
+      <Filter>Graphic\src</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureShaderClass.cpp">
+      <Filter>Graphic\src</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureClass.cpp">
+      <Filter>Graphic\src</Filter>
+    </ClCompile>
+    <ClCompile Include="BitmapClass.cpp">
+      <Filter>Graphic\src</Filter>
+    </ClCompile>
+    <ClCompile Include="DDSTextureLoader.cpp">
+      <Filter>Graphic\src</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Color.ps">
+      <Filter>Resource</Filter>
+    </None>
+    <None Include="Color.vs">
+      <Filter>Resource</Filter>
+    </None>
+    <None Include="Texture.vs">
+      <Filter>Resource</Filter>
+    </None>
+    <None Include="Texture.ps">
+      <Filter>Resource</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="resource\seafloor.dds">
+      <Filter>Resource</Filter>
+    </Image>
+  </ItemGroup>
+</Project>
