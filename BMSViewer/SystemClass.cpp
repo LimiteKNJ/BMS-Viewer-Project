@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "inputclass.h"
 #include "graphicsclass.h"
+#include "SoundClass.h"
 #include "systemclass.h"
 
 
@@ -36,7 +37,10 @@ bool SystemClass::Initialize()
 	}
 
 	// m_Input 객체 초기화
-	m_Input->Initialize();
+	if (!m_Input->Initialize()) {
+
+		return false;
+	}
 
 	// m_Graphics 객체 생성.  그래픽 랜더링을 처리하기 위한 객체입니다.
 	m_Graphics = new GraphicsClass;
@@ -46,12 +50,37 @@ bool SystemClass::Initialize()
 	}
 
 	// m_Graphics 객체 초기화.
-	return m_Graphics->Initialize(screenWidth, screenHeight, m_hwnd);
+	if (!m_Graphics->Initialize(screenWidth, screenHeight, m_hwnd)) {
+
+		return false;
+	}
+
+	m_Sound = new SoundClass;
+	if (!m_Sound) {
+
+		return false;
+	}
+
+	if (!m_Sound->Initialize(m_hwnd)) {
+
+		MessageBox(m_hwnd, L"Could not initialize Direct Sound.", L"Error", MB_OK);
+		return false;
+	}
+
+	return true;
 }
 
 
 void SystemClass::Shutdown()
 {
+	// m_Sound 객체 반환
+	if (m_Sound) {
+
+		m_Sound->Shutdown();
+		delete m_Sound;
+		m_Sound = 0;
+	}
+
 	// m_Graphics 객체 반환
 	if (m_Graphics)
 	{
@@ -94,8 +123,11 @@ void SystemClass::Run()
 		else
 		{
 			// 그 외에는 Frame 함수를 처리합니다.
-			if (!Frame())
+			if (!Frame()) {
+
+				MessageBox(m_hwnd, L"Frame Processing Failed", L"Error", MB_OK);
 				break;
+			}
 		}
 	}
 }

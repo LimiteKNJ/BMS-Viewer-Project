@@ -17,13 +17,15 @@ InputClass::~InputClass()
 }
 
 
-void InputClass::Initialize()
+bool InputClass::Initialize()
 {
 	// 키 배열을 초기화합니다
 	for (int i = 0; i<256; ++i)
 	{
 		m_keys[i] = false;
 	}
+
+	return true;
 }
 
 
