@@ -31,16 +31,17 @@ bool SystemClass::Initialize()
 
 	// m_Input 객체 생성. 이 클래스는 추후 사용자의 키보드 입력 처리에 사용됩니다.
 	m_Input = new InputClass;
-	if (!m_Input)
-	{
+	if (!m_Input){
 		return false;
 	}
 
 	// m_Input 객체 초기화
-	if (!m_Input->Initialize()) {
+	if (!m_Input->Initialize(m_hinstance, m_hwnd, screenWidth, screenHeight)) {
 
+		MessageBox(m_hwnd, L"Could not initailize the input object.", L"Error", MB_OK);
 		return false;
 	}
+
 
 	// m_Graphics 객체 생성.  그래픽 랜더링을 처리하기 위한 객체입니다.
 	m_Graphics = new GraphicsClass;
@@ -92,6 +93,7 @@ void SystemClass::Shutdown()
 	// m_Input 객체 반환
 	if (m_Input)
 	{
+		m_Input->Shutdown();
 		delete m_Input;
 		m_Input = 0;
 	}
@@ -128,6 +130,11 @@ void SystemClass::Run()
 				MessageBox(m_hwnd, L"Frame Processing Failed", L"Error", MB_OK);
 				break;
 			}
+
+		}
+
+		if (m_Input->IsEscapePressed() == true) {
+			break;
 		}
 	}
 }
@@ -135,44 +142,36 @@ void SystemClass::Run()
 
 bool SystemClass::Frame()
 {
+	int mouseX = 0; int mouseY = 0;
 	// ESC 키 감지 및 종료 여부를 처리합니다
-	if (m_Input->IsKeyDown(VK_ESCAPE))
-	{
+	if (!m_Input->Frame()) {
 		return false;
 	}
 
+	m_Input->GetMouseLocation(mouseX, mouseY);
+
 	// 그래픽 객체의 Frame을 처리합니다
-	return m_Graphics->Frame();
+	if (!m_Graphics->Frame(mouseX, mouseY)) {
+		return false;
+	}
+	return m_Graphics->Render();
 }
+
+
+bool SystemClass::HandleInput() {
+
+	/* 이벤트 구현 */
+
+	return true;
+}
+
 
 
 LRESULT CALLBACK SystemClass::MessageHandler(HWND hwnd, UINT umsg, WPARAM wparam, LPARAM lparam)
 {
-	switch (umsg)
-	{
-		// 키보드가 눌러졌는가 처리
-	case WM_KEYDOWN:
-	{
-		// 키 눌림 flag를 m_Input 객체에 처리하도록 합니다
-		m_Input->KeyDown((unsigned int)wparam);
-		return 0;
-	}
-
-	// 키보드가 떨어졌는가 처리
-	case WM_KEYUP:
-	{
-		// 키 해제 flag를 m_Input 객체에 처리하도록 합니다.
-		m_Input->KeyUp((unsigned int)wparam);
-		return 0;
-	}
-
-	// 그 외의 모든 메시지들은 기본 메시지 처리로 넘깁니다.
-	default:
-	{
-		return DefWindowProc(hwnd, umsg, wparam, lparam);
-	}
-	}
+	return DefWindowProc(hwnd, umsg, wparam, lparam);
 }
+
 
 
 void SystemClass::InitializeWindows(int& screenWidth, int& screenHeight)
@@ -228,9 +227,9 @@ void SystemClass::InitializeWindows(int& screenWidth, int& screenHeight)
 	}
 	else
 	{
-		// 윈도우 모드의 경우 800 * 600 크기를 지정합니다.
-		screenWidth = 800;
-		screenHeight = 600;
+		// Window창 크기 지정
+		screenWidth = 640;
+		screenHeight = 360;
 
 		// 윈도우 창을 가로, 세로의 정 가운데 오도록 합니다.
 		posX = (GetSystemMetrics(SM_CXSCREEN) - screenWidth) / 2;
@@ -239,7 +238,8 @@ void SystemClass::InitializeWindows(int& screenWidth, int& screenHeight)
 
 	// 윈도우를 생성하고 핸들을 구합니다.
 	m_hwnd = CreateWindowEx(WS_EX_APPWINDOW, m_applicationName, m_applicationName,
-		WS_CAPTION | WS_SYSMENU | WS_CLIPSIBLINGS | WS_CLIPCHILDREN | WS_POPUP,
+		WS_CAPTION | WS_SYSMENU | WS_CLIPSIBLINGS |
+		WS_CLIPCHILDREN | WS_POPUP | WS_EX_ACCEPTFILES,
 		posX, posY, screenWidth, screenHeight, NULL, NULL, m_hinstance, NULL);
 
 	// 윈도우를 화면에 표시하고 포커스를 지정합니다
@@ -252,8 +252,7 @@ void SystemClass::InitializeWindows(int& screenWidth, int& screenHeight)
 void SystemClass::ShutdownWindows()
 {
 	// 풀스크린 모드였다면 디스플레이 설정을 초기화합니다.
-	if (FULL_SCREEN)
-	{
+	if (FULL_SCREEN) {
 		ChangeDisplaySettings(NULL, 0);
 	}
 

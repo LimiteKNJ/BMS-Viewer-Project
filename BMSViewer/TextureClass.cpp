@@ -30,6 +30,7 @@ bool TextureClass::Initialize(ID3D11Device* device, WCHAR* filename)
 }
 
 
+
 void TextureClass::Shutdown()
 {
 	//텍스처 뷰 리소스를 해제한다.

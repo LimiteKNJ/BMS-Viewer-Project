@@ -1,14 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="소스 파일">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="헤더 파일">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
-    </Filter>
     <Filter Include="Graphic">
       <UniqueIdentifier>{899b177d-ea69-4eac-b2d7-6d139d3c333b}</UniqueIdentifier>
     </Filter>
@@ -24,22 +16,43 @@
     <Filter Include="Resource">
       <UniqueIdentifier>{3fbdf799-448a-41da-a9b7-f8593ed978d8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Graphic\Texture Shader">
+      <UniqueIdentifier>{b0869fc2-a2f4-4807-87e1-8c64263de649}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphic\Texture Shader\HLSL">
+      <UniqueIdentifier>{ae287b61-7e0f-46dd-8ef2-e6b9cd6019a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphic\Texture Shader\header">
+      <UniqueIdentifier>{f57e5a9a-e446-44c4-902f-f088f3d8c35b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphic\Texture Shader\src">
+      <UniqueIdentifier>{cccd7977-fa14-412e-9f81-768776f88f37}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System">
+      <UniqueIdentifier>{1573a170-51a0-4655-9c61-cba0cd4c016a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System\src">
+      <UniqueIdentifier>{513a67ce-5302-4332-a84a-d1f7012a5ded}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System\header">
+      <UniqueIdentifier>{695064fb-d815-4d3c-95f0-0181df605b11}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="font">
+      <UniqueIdentifier>{8c665d3d-b8b1-4481-a209-0c01ab9da476}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lib">
+      <UniqueIdentifier>{35cc8146-d2f3-46db-87af-6d2602e0aae0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lib\header">
+      <UniqueIdentifier>{ee202aa2-2b07-41a7-a484-8320844ae4c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lib\src">
+      <UniqueIdentifier>{d14b8ebf-8854-425f-a798-cb6c06749467}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="stdafx.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="targetver.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="SystemClass.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="GraphicsClass.h">
       <Filter>Graphic\header</Filter>
-    </ClInclude>
-    <ClInclude Include="InputClass.h">
-      <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="AlignedAllocationPolicy.h">
       <Filter>Graphic\header</Filter>
@@ -53,37 +66,49 @@
     <ClInclude Include="CameraClass.h">
       <Filter>Graphic\header</Filter>
     </ClInclude>
-    <ClInclude Include="TextureShaderClass.h">
-      <Filter>Graphic\header</Filter>
-    </ClInclude>
     <ClInclude Include="TextureClass.h">
       <Filter>Graphic\header</Filter>
     </ClInclude>
     <ClInclude Include="BitmapClass.h">
       <Filter>Graphic\header</Filter>
     </ClInclude>
-    <ClInclude Include="DDSTextureLoader.h">
+    <ClInclude Include="FontClass.h">
       <Filter>Graphic\header</Filter>
     </ClInclude>
-    <ClInclude Include="CustomDataStructure.hpp">
+    <ClInclude Include="TextClass.h">
       <Filter>Graphic\header</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureShaderClass.h">
+      <Filter>Graphic\Texture Shader\header</Filter>
+    </ClInclude>
+    <ClInclude Include="FontShaderClass.h">
+      <Filter>Graphic\Texture Shader\header</Filter>
+    </ClInclude>
+    <ClInclude Include="InputClass.h">
+      <Filter>System\header</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundClass.h">
+      <Filter>System\header</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>System\header</Filter>
+    </ClInclude>
+    <ClInclude Include="SystemClass.h">
+      <Filter>System\header</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>System\header</Filter>
+    </ClInclude>
+    <ClInclude Include="ImageClass.h">
+      <Filter>Graphic\header</Filter>
+    </ClInclude>
+    <ClInclude Include="tinyxml2.h">
+      <Filter>Lib\header</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="stdafx.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Main.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="SystemClass.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="GraphicsClass.cpp">
       <Filter>Graphic\src</Filter>
-    </ClCompile>
-    <ClCompile Include="InputClass.cpp">
-      <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="D3DClass.cpp">
       <Filter>Graphic\src</Filter>
@@ -91,36 +116,77 @@
     <ClCompile Include="CameraClass.cpp">
       <Filter>Graphic\src</Filter>
     </ClCompile>
-    <ClCompile Include="TextureShaderClass.cpp">
+    <ClCompile Include="BitmapClass.cpp">
       <Filter>Graphic\src</Filter>
+    </ClCompile>
+    <ClCompile Include="FontClass.cpp">
+      <Filter>Graphic\src</Filter>
+    </ClCompile>
+    <ClCompile Include="TextClass.cpp">
+      <Filter>Graphic\src</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureShaderClass.cpp">
+      <Filter>Graphic\Texture Shader\src</Filter>
+    </ClCompile>
+    <ClCompile Include="FontShaderClass.cpp">
+      <Filter>Graphic\Texture Shader\src</Filter>
     </ClCompile>
     <ClCompile Include="TextureClass.cpp">
       <Filter>Graphic\src</Filter>
     </ClCompile>
-    <ClCompile Include="BitmapClass.cpp">
+    <ClCompile Include="InputClass.cpp">
+      <Filter>System\src</Filter>
+    </ClCompile>
+    <ClCompile Include="Main.cpp">
+      <Filter>System\src</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundClass.cpp">
+      <Filter>System\src</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>System\src</Filter>
+    </ClCompile>
+    <ClCompile Include="SystemClass.cpp">
+      <Filter>System\src</Filter>
+    </ClCompile>
+    <ClCompile Include="ImageClass.cpp">
       <Filter>Graphic\src</Filter>
     </ClCompile>
-    <ClCompile Include="DDSTextureLoader.cpp">
-      <Filter>Graphic\src</Filter>
+    <ClCompile Include="tinyxml2.cpp">
+      <Filter>Lib\src</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Color.ps">
-      <Filter>Resource</Filter>
+      <Filter>Graphic\Texture Shader\HLSL</Filter>
     </None>
     <None Include="Color.vs">
-      <Filter>Resource</Filter>
+      <Filter>Graphic\Texture Shader\HLSL</Filter>
     </None>
-    <None Include="Texture.vs">
-      <Filter>Resource</Filter>
+    <None Include="font.ps">
+      <Filter>Graphic\Texture Shader\HLSL</Filter>
+    </None>
+    <None Include="font.vs">
+      <Filter>Graphic\Texture Shader\HLSL</Filter>
     </None>
     <None Include="Texture.ps">
-      <Filter>Resource</Filter>
+      <Filter>Graphic\Texture Shader\HLSL</Filter>
+    </None>
+    <None Include="Texture.vs">
+      <Filter>Graphic\Texture Shader\HLSL</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
     <Image Include="resource\seafloor.dds">
       <Filter>Resource</Filter>
     </Image>
+    <Image Include="font\font.dds">
+      <Filter>font</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="font\fontdata.txt">
+      <Filter>font</Filter>
+    </Text>
   </ItemGroup>
 </Project>

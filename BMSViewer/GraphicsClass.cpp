@@ -5,6 +5,7 @@
 #include "CameraClass.h"
 #include "TextureShaderClass.h"
 #include "BitmapClass.h"
+#include "TextClass.h"
 
 
 GraphicsClass::GraphicsClass()
@@ -39,26 +40,39 @@ bool GraphicsClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 
 	/* Camera 객체 생성 */
 	m_Camera = new CameraClass;
-	if (!m_Camera)
-	{
+	if (!m_Camera) {
 		return false;
 	}
 
 	// 카메라 객체 초기화
-	m_Camera->SetPosition(0.0f, 0.0f, -6.0f);
+	XMMATRIX baseViewMatrix;
+	m_Camera->SetPosition(0.0f, 0.0f, -1.0f);
+	m_Camera->Render();
+	m_Camera->GetViewMatrix(baseViewMatrix);
 
 	/* Bitmap 객체 생성*/
-	m_Bitmap = new BitmapClass;
-	if (!m_Bitmap)
-	{
+	m_Bitmap_UIpng = new BitmapClass;
+	if (!m_Bitmap_UIpng) {
 		return false;
 	}
 
-	// Bitmap 객체 초기화
-	if (!m_Bitmap->Initialize(m_Direct3D->GetDevice(), screenWidth, screenHeight,
-		L"resource/seafloor.dds", 256, 256))
+	if (!m_Bitmap_UIpng->Initialize(m_Direct3D->GetDevice(), screenWidth, screenHeight,
+		L"resource/MainFrameUI.png", 640, 360, true))
 	{
 		MessageBox(hwnd, L"Could not initialize the bitmap object.", L"Error", MB_OK);
+		return false;
+	}
+
+	/* Text 객체 생성*/
+	m_Text = new TextClass;
+	if (!m_Text) {
+		return false;
+	}
+
+	if (!m_Text->Initialize(m_Direct3D->GetDevice(), m_Direct3D->GetDeviceContext(), hwnd,
+		screenWidth, screenHeight, baseViewMatrix))	{
+
+		MessageBox(hwnd, L"Could not initialize the text object.", L"Error", MB_OK);
 		return false;
 	}
 	
@@ -82,7 +96,7 @@ bool GraphicsClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 
 void GraphicsClass::Shutdown()
 {
-	// ColorShader 객체 반환
+	// TextureShader 객체 반환
 	if (m_TextureShader)
 	{
 		m_TextureShader->Shutdown();
@@ -90,15 +104,30 @@ void GraphicsClass::Shutdown()
 		m_TextureShader = 0;
 	}
 
-	// Direct3D 객체 반환
-	if (m_Bitmap)
+	// Bitmap 객체 반환
+	if (m_Bitmap_UIdds)
 	{
-		m_Bitmap->Shutdown();
-		delete m_Bitmap;
-		m_Bitmap = 0;
+		m_Bitmap_UIdds->Shutdown();
+		delete m_Bitmap_UIdds;
+		m_Bitmap_UIdds = 0;
 	}
 
-	// Direct3D 객체 반환
+	if (m_Bitmap_UIpng)
+	{
+		m_Bitmap_UIpng->Shutdown();
+		delete m_Bitmap_UIpng;
+		m_Bitmap_UIpng = 0;
+	}
+
+	// Text 객체 반환
+	if (m_Text)
+	{
+		m_Text->Shutdown();
+		delete m_Text;
+		m_Text = 0;
+	}
+
+	// Camera 객체 반환
 	if (m_Camera)
 	{
 		delete m_Camera;
@@ -115,16 +144,18 @@ void GraphicsClass::Shutdown()
 }
 
 
-bool GraphicsClass::Frame()
+bool GraphicsClass::Frame(int mouseX, int mouseY)
 {
-	static float rotation = 0.0f;
+	/* 동적 변경 사항 구현 */
 
-	rotation += (float)XM_PI * 0.005f;
-	if (rotation > 360.0f)
-		rotation -= 360.0f;
+	if (!m_Text->SetMousePosition(m_Direct3D->GetDeviceContext(), mouseX, mouseY)) {
+		return false;
+	}
 
-	// 그래픽 랜더링 처리
-	return Render();
+	/* 동적 변경 사항 구현 끝 */
+
+	m_Camera->SetPosition(0.0f, 0.0f, -10.0f);
+	return true;
 }
 
 
@@ -143,21 +174,27 @@ bool GraphicsClass::Render()
 	m_Direct3D->GetOrthoMatrix(orthoMatrix);
 
 	m_Direct3D->TurnZBufferOff();
+	m_Direct3D->TurnOnAlphaBlending();
 
-	int x = 250;
-	int y = 250;
-	m_Bitmap->Render(m_Direct3D->GetDeviceContext(), x, y);
-	if (!m_Bitmap->Render(m_Direct3D->GetDeviceContext(), x, y)) {
+	/* 실제 UI 구현 부분 */
 
-		return false;
-	}
-	
-	if (!m_TextureShader->Render(m_Direct3D->GetDeviceContext(), m_Bitmap->GetIndexCount(),
-		worldMatrix, viewMatrix, orthoMatrix, m_Bitmap->GetTexture())) {
-
+	if (!m_Bitmap_UIpng->Render(m_Direct3D->GetDeviceContext(), 0, 0)) {
 		return false;
 	}
 
+	if (!m_TextureShader->Render(m_Direct3D->GetDeviceContext(), m_Bitmap_UIpng->GetIndexCount(),
+		worldMatrix, viewMatrix, orthoMatrix, m_Bitmap_UIpng->GetImage())) {
+
+		return false;
+	}
+
+	if (!m_Text->Render(m_Direct3D->GetDeviceContext(), worldMatrix, orthoMatrix)) {
+		return false; // Text의 처리
+	}
+
+	/* 실제 UI 구현 부분 끝*/
+
+	m_Direct3D->TurnOffAlphaBlending();
 	m_Direct3D->TurnZBufferOn();
 
 	// 버퍼의 내용을 화면에 출력합니다

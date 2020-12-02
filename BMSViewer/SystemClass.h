@@ -19,6 +19,7 @@ public:
 	LRESULT CALLBACK MessageHandler(HWND, UINT, WPARAM, LPARAM);
 
 private:
+	bool HandleInput();
 	bool Frame();
 	void InitializeWindows(int& screenWidth, int& screenHeight);
 	void ShutdownWindows();

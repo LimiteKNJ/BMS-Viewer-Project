@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="no_test.cpp">
+    <ClCompile Include="halfmang0619.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

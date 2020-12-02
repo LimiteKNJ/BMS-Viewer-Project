@@ -22,13 +22,21 @@ public:
 	void GetOrthoMatrix(XMMATRIX& orthoMatrix);
 
 	void GetVideoCardInfo(char* cardName, int& memory);
+
 	void TurnZBufferOn();
 	void TurnZBufferOff();
 
+	void TurnOnAlphaBlending();
+	void TurnOffAlphaBlending();
+
+
+
 private:
+
 	bool m_vsync_enabled = false;
 	int m_videoCardMemory = 0;
 	char m_videoCardDescription[128] = { 0, };
+
 	IDXGISwapChain* m_swapChain = nullptr;
 	ID3D11Device* m_device = nullptr;
 	ID3D11DeviceContext* m_deviceContext = nullptr;
@@ -41,4 +49,6 @@ private:
 	XMMATRIX m_worldMatrix;
 	XMMATRIX m_orthoMatrix;
 	ID3D11DepthStencilState* m_depthDisabledStencilState = nullptr;
+	ID3D11BlendState* m_alphaEnableBlendingState = nullptr;
+	ID3D11BlendState* m_alphaDisableBlendingState = nullptr;
 };

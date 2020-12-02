@@ -1,6 +1,9 @@
 #include "stdafx.h"
-#include "TextureClass.h"
 #include "BitmapClass.h"
+
+#include "TextureClass.h"
+#include "ImageClass.h"
+
 
 
 BitmapClass::BitmapClass()
@@ -18,7 +21,9 @@ BitmapClass::~BitmapClass()
 }
 
 
-bool BitmapClass::Initialize(ID3D11Device* device, int screenWidth, int screenHeight, WCHAR* textureFilename, int bitmapWidth, int bitmapHeight)
+
+bool BitmapClass::Initialize(ID3D11Device* device, int screenWidth, int screenHeight,
+	WCHAR* filename, int bitmapWidth, int bitmapHeight, bool imgFlag)
 {
 	// 화면 크기를 멤버변수에 저장
 	m_screenWidth = screenWidth;
@@ -39,7 +44,12 @@ bool BitmapClass::Initialize(ID3D11Device* device, int screenWidth, int screenHe
 	}
 
 	// 이 모델의 텍스처를 로드합니다.
-	return LoadTexture(device, textureFilename);
+	if (imgFlag) {
+		return LoadImage(device, filename);
+	}
+	else{
+		return LoadTexture(device, filename);;
+	}
 }
 
 
@@ -73,6 +83,11 @@ int BitmapClass::GetIndexCount()
 	return m_indexCount;
 }
 
+
+ID3D11ShaderResourceView* BitmapClass::GetImage()
+{
+	return m_Image->GetTexture();
+}
 
 ID3D11ShaderResourceView* BitmapClass::GetTexture()
 {
@@ -279,7 +294,21 @@ void BitmapClass::RenderBuffers(ID3D11DeviceContext* deviceContext)
 }
 
 
-bool BitmapClass::LoadTexture(ID3D11Device* device, WCHAR* filename)
+
+bool BitmapClass::LoadImage(ID3D11Device* device, WCHAR* imgFilename)
+{
+	// 텍스처 오브젝트를 생성한다.
+	m_Image = new ImageClass;
+	if (!m_Image)
+	{
+		return false;
+	}
+
+	// 텍스처 오브젝트를 초기화한다.
+	return m_Image->Initialize(device, imgFilename);
+}
+
+bool BitmapClass::LoadTexture(ID3D11Device* device, WCHAR* ddsFilename)
 {
 	// 텍스처 오브젝트를 생성한다.
 	m_Texture = new TextureClass;
@@ -289,13 +318,21 @@ bool BitmapClass::LoadTexture(ID3D11Device* device, WCHAR* filename)
 	}
 
 	// 텍스처 오브젝트를 초기화한다.
-	return m_Texture->Initialize(device, filename);
+	return m_Texture->Initialize(device, ddsFilename);
 }
+
 
 
 void BitmapClass::ReleaseTexture()
 {
 	// 텍스처 오브젝트를 릴리즈한다.
+	if (m_Image)
+	{
+		m_Image->Shutdown();
+		delete m_Image;
+		m_Image = 0;
+	}
+
 	if (m_Texture)
 	{
 		m_Texture->Shutdown();

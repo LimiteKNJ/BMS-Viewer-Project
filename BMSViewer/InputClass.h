@@ -4,16 +4,31 @@ class InputClass
 {
 public:
 	InputClass();
-	InputClass(const InputClass&);
+	InputClass(const InputClass& other);
 	~InputClass();
 
-	bool Initialize();
+	bool Initialize(HINSTANCE, HWND, int screenWidth, int screenHeight);
+	void Shutdown();
+	bool Frame();
 
-	void KeyDown(unsigned int input);
-	void KeyUp(unsigned int input);
-
-	bool IsKeyDown(unsigned int key);
+	bool IsEscapePressed();
+	void GetMouseLocation(int& mouseX, int& mouseY);
 
 private:
-	bool m_keys[256];
+	bool ReadKeyboard();
+	bool ReadMouse();
+	void ProcessInput();
+
+private:
+	IDirectInput8* m_directInput = nullptr;
+	IDirectInputDevice8* m_keyboard = nullptr;
+	IDirectInputDevice8* m_mouse = nullptr;
+
+	unsigned char m_keyboardState[256] = { 0, };
+	DIMOUSESTATE m_mouseState;
+
+	int m_screenWidth = 0;
+	int m_screenHeight = 0;
+	int m_mouseX = 0;
+	int m_mouseY = 0;
 };
